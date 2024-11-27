@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../helpers/database");
+const sequelize = require("../database");
 
-const ingredientes = sequelize.define("ingredientes", {
+const Ingredientes = sequelize.define("ingredientes", {
     ingredientes_name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -9,8 +9,10 @@ const ingredientes = sequelize.define("ingredientes", {
     unidad_medida: {
         type: DataTypes.INTEGER,
         allowNull: false,
-      },
-      timestamps: true,
-      paranoid: true,
+      }
+}, {
+    timestamps: true,
+    paranoid: true,
 });
+
 module.exports = Ingredientes;

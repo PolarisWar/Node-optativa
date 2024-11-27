@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../helpers/database");
+const sequelize = require("../database");
 
-const categorias = sequelize.define("categorias", {
+const Categorias = sequelize.define("categorias", { 
     categoria_name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -10,8 +10,9 @@ const categorias = sequelize.define("categorias", {
         type: DataTypes.STRING,
         allowNull: false,
       },
-
+}, {
       timestamps: true,
       paranoid: true,
 });
-module.exports = Categorias;
+
+module.exports = Categorias; 
