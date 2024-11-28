@@ -25,7 +25,7 @@ const Recetas = require("./helpers/models/recetas");
 
 // Sincronizar los modelos para verificar la conexión con la base de datos
 sequelize
-  .sync({ force: true })
+  .sync({ alter: true })
   .then(() => {
     console.log("Todos los modelos se sincronizaron correctamente.");
   })
