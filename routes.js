@@ -6,8 +6,14 @@ const recetasController = require('./helpers/controllers/recetasController');
 const ingredientesController = require('./helpers/controllers/ingredientesController');
 const categoriasController = require('./helpers/controllers/categoriasController');
 
+// Importar los middlewares de validación
+const validateIngredienteData = require('./middlewares/validateIngredienteData');
+const validateCategoriaData = require('./middlewares/validateCategoriaData');
+const validateRecetaData = require('./middlewares/validateRecetaData');
+
+
 // Ruta para agregar una nueva categoría
-router.post('/categorias', async (req, res) => {
+router.post('/categorias', validateCategoriaData, async (req, res) => {
   try {
     const { categoria_name, categoria_descripcion } = req.body;
     const nuevaCategoria = await categoriasController.agregarCategoria(categoria_name, categoria_descripcion);
@@ -39,7 +45,7 @@ router.delete('/categorias/:id', async (req, res) => {
 });
 
 // Ruta para actualizar una categoría
-router.put('/categorias/:id', async (req, res) => {
+router.put('/categorias/:id', validateCategoriaData, async (req, res) => {
   try {
     const categoriaId = req.params.id;
     const updatedData = req.body;
@@ -51,7 +57,7 @@ router.put('/categorias/:id', async (req, res) => {
 });
 
 // Ruta para agregar un nuevo ingrediente
-router.post('/ingredientes', async (req, res) => {
+router.post('/ingredientes', validateIngredienteData, async (req, res) => {
   try {
     const { ingredientes_name, unidad_medida, recetaId } = req.body;
     const nuevoIngrediente = await ingredientesController.agregarIngrediente(ingredientes_name, unidad_medida, recetaId);
@@ -83,7 +89,7 @@ router.delete('/ingredientes/:id', async (req, res) => {
 });
 
 // Ruta para actualizar un ingrediente
-router.put('/ingredientes/:id', async (req, res) => {
+router.put('/ingredientes/:id', validateIngredienteData, async (req, res) => {
   try {
     const ingredienteId = req.params.id;
     const updatedData = req.body;
@@ -95,7 +101,8 @@ router.put('/ingredientes/:id', async (req, res) => {
 });
 
 // Rutas para recetas
-router.post('/recetas', async (req, res) => {
+// Ruta para agregar una nueva receta
+router.post('/recetas', validateRecetaData, async (req, res) => {
   try {
     const { receta_name, receta_descripcion, receta_instrucciones, tiempo_preparacion, categoriaId } = req.body;
     const nuevaReceta = await recetasController.agregarReceta(receta_name, receta_descripcion, receta_instrucciones, tiempo_preparacion, categoriaId);
@@ -126,7 +133,7 @@ router.delete('/recetas/:id', async (req, res) => {
 });
 
 // Ruta para actualizar una receta
-router.put('/recetas/:id', async (req, res) => {
+router.put('/recetas/:id', validateRecetaData, async (req, res) => {
   try {
     const recetaId = req.params.id;
     const updatedData = req.body;
