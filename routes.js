@@ -136,4 +136,230 @@ router.post('/ingredientes', ingredientesController.agregarIngrediente);
  */
 router.get('/ingredientes', ingredientesController.mostrarIngredientes);
 
+/**
+ * @swagger
+ * /categorias/{id}:
+ *   delete:
+ *     summary: Eliminar una categoría
+ *     tags: [Categorias]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la categoría a eliminar
+ *     responses:
+ *       200:
+ *         description: Categoría eliminada exitosamente
+ *       404:
+ *         description: Categoría no encontrada
+ *       500:
+ *         description: Error al eliminar la categoría
+ */
+router.delete('/categorias/:id', async (req, res) => {
+  try {
+    const categoriaId = req.params.id;
+    await categoriasController.deleteCategoria(categoriaId);
+    res.status(200).json({ message: `Categoría con ID ${categoriaId} eliminada.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * @swagger
+ * /categorias/{id}:
+ *   put:
+ *     summary: Actualizar una categoría
+ *     tags: [Categorias]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la categoría a actualizar
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               categoria_name:
+ *                 type: string
+ *               categoria_descripcion:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Categoría actualizada exitosamente
+ *       404:
+ *         description: Categoría no encontrada
+ *       500:
+ *         description: Error al actualizar la categoría
+ */
+router.put('/categorias/:id', async (req, res) => {
+  try {
+    const categoriaId = req.params.id;
+    const updatedData = req.body;
+    await categoriasController.updateCategoria(categoriaId, updatedData);
+    res.status(200).json({ message: `Categoría con ID ${categoriaId} actualizada.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * @swagger
+ * /ingredientes/{id}:
+ *   delete:
+ *     summary: Eliminar un ingrediente
+ *     tags: [Ingredientes]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del ingrediente a eliminar
+ *     responses:
+ *       200:
+ *         description: Ingrediente eliminado exitosamente
+ *       404:
+ *         description: Ingrediente no encontrado
+ *       500:
+ *         description: Error al eliminar el ingrediente
+ */
+router.delete('/ingredientes/:id', async (req, res) => {
+  try {
+    const ingredienteId = req.params.id;
+    await ingredientesController.deleteIngrediente(ingredienteId);
+    res.status(200).json({ message: `Ingrediente con ID ${ingredienteId} eliminado.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * @swagger
+ * /ingredientes/{id}:
+ *   put:
+ *     summary: Actualizar un ingrediente
+ *     tags: [Ingredientes]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del ingrediente a actualizar
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               ingredientes_name:
+ *                 type: string
+ *               unidad_medida:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Ingrediente actualizado exitosamente
+ *       404:
+ *         description: Ingrediente no encontrado
+ *       500:
+ *         description: Error al actualizar el ingrediente
+ */
+router.put('/ingredientes/:id', async (req, res) => {
+  try {
+    const ingredienteId = req.params.id;
+    const updatedData = req.body;
+    await ingredientesController.updateIngrediente(ingredienteId, updatedData);
+    res.status(200).json({ message: `Ingrediente con ID ${ingredienteId} actualizado.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * @swagger
+ * /recetas/{id}:
+ *   delete:
+ *     summary: Eliminar una receta
+ *     tags: [Recetas]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la receta a eliminar
+ *     responses:
+ *       200:
+ *         description: Receta eliminada exitosamente
+ *       404:
+ *         description: Receta no encontrada
+ *       500:
+ *         description: Error al eliminar la receta
+ */
+router.delete('/recetas/:id', async (req, res) => {
+  try {
+    const recetaId = req.params.id;
+    await recetasController.deleteReceta(recetaId);
+    res.status(200).json({ message: `Receta con ID ${recetaId} eliminada.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * @swagger
+ * /recetas/{id}:
+ *   put:
+ *     summary: Actualizar una receta
+ *     tags: [Recetas]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la receta a actualizar
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               receta_name:
+ *                 type: string
+ *               receta_descripcion:
+ *                 type: string
+ *               receta_instrucciones:
+ *                 type: string
+ *               tiempo_preparacion:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Receta actualizada exitosamente
+ *       404:
+ *         description: Receta no encontrada
+ *       500:
+ *         description: Error al actualizar la receta
+ */
+router.put('/recetas/:id', async (req, res) => {
+  try {
+    const recetaId = req.params.id;
+    const updatedData = req.body;
+    await recetasController.updateReceta(recetaId, updatedData);
+    res.status(200).json({ message: `Receta con ID ${recetaId} actualizada.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
