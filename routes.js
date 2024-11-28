@@ -24,7 +24,9 @@ router.get('/', (req, res) => {
  *           schema:
  *             type: object
  *             properties:
- *               nombre:
+ *               categoria_name:
+ *                 type: string
+ *               categoria_descripcion:
  *                 type: string
  *     responses:
  *       201:
@@ -69,6 +71,8 @@ router.get('/categorias', categoriasController.mostrarCategorias);
  *                 type: string
  *               tiempo_preparacion:
  *                 type: integer
+ *               categoriaId:
+ *                 type: integer
  *     responses:
  *       201:
  *         description: Receta creada exitosamente
@@ -104,8 +108,12 @@ router.get('/recetas', recetasController.mostrarRecetas);
  *           schema:
  *             type: object
  *             properties:
- *               nombre:
+ *               ingredientes_name:
  *                 type: string
+ *               unidad_medida:
+ *                 type: integer
+ *               recetaId:
+ *                 type: integer
  *     responses:
  *       201:
  *         description: Ingrediente creado exitosamente
