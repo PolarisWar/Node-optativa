@@ -1,48 +1,26 @@
 const Recetas = require('../models/recetas');
 
-// Función para agregar una nueva receta
-const agregarReceta = async (req, res) => {
-  try {
-    const { receta_name, receta_descripcion, receta_instrucciones, tiempo_preparacion, categoriaId } = req.body;
-    if (!receta_name || !receta_descripcion || !receta_instrucciones || !tiempo_preparacion || !categoriaId) {
-      return res.status(400).json({ error: "Todos los campos son requeridos." });
-    }
-    const nuevaReceta = await Recetas.create({ receta_name, receta_descripcion, receta_instrucciones, tiempo_preparacion, categoriaId });
-    res.status(201).json(nuevaReceta);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+const agregarReceta = async (receta_name, receta_descripcion, receta_instrucciones, tiempo_preparacion, categoriaId) => {
+  if (!receta_name || !receta_descripcion || !receta_instrucciones || !tiempo_preparacion || !categoriaId) {
+    throw new Error("Todos los campos son requeridos.");
   }
+  return await Recetas.create({ receta_name, receta_descripcion, receta_instrucciones, tiempo_preparacion, categoriaId });
 };
 
-// Función para mostrar detalles de todas las recetas
-const mostrarRecetas = async (req, res) => {
-  try {
-    const recetas = await Recetas.findAll();
-    res.status(200).json(recetas);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+const mostrarRecetas = async () => {
+  return await Recetas.findAll();
 };
+
 async function deleteReceta(recetaId) {
-  try {
-    await Recetas.destroy({
-      where: { id: recetaId }
-    });
-    console.log(`Receta con ID ${recetaId} eliminada.`);
-  } catch (error) {
-    console.error("Error al eliminar la receta:", error);
-  }
+  await Recetas.destroy({
+    where: { id: recetaId }
+  });
 }
 
 async function updateReceta(recetaId, updatedData) {
-  try {
-    await Recetas.update(updatedData, {
-      where: { id: recetaId }
-    });
-    console.log(`Receta con ID ${recetaId} actualizada.`);
-  } catch (error) {
-    console.error("Error al actualizar la receta:", error);
-  }
+  await Recetas.update(updatedData, {
+    where: { id: recetaId }
+  });
 }
 
 module.exports = {

@@ -2,13 +2,139 @@ const express = require('express');
 const router = express.Router();
 
 // Importar los controladores
-const categoriasController = require('./helpers/controllers/categoriasController');
 const recetasController = require('./helpers/controllers/recetasController');
 const ingredientesController = require('./helpers/controllers/ingredientesController');
+const categoriasController = require('./helpers/controllers/categoriasController');
 
-// Ruta para la página principal
-router.get('/', (req, res) => {
-  res.send('¡Hola, mundo!');
+// Ruta para agregar una nueva categoría
+router.post('/categorias', async (req, res) => {
+  try {
+    const { categoria_name, categoria_descripcion } = req.body;
+    const nuevaCategoria = await categoriasController.agregarCategoria(categoria_name, categoria_descripcion);
+    res.status(201).json(nuevaCategoria);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Ruta para mostrar todas las categorías
+router.get('/categorias', async (req, res) => {
+  try {
+    const categorias = await categoriasController.mostrarCategorias();
+    res.status(200).json(categorias);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Ruta para eliminar una categoría
+router.delete('/categorias/:id', async (req, res) => {
+  try {
+    const categoriaId = req.params.id;
+    await categoriasController.deleteCategoria(categoriaId);
+    res.status(200).json({ message: `Categoría con ID ${categoriaId} eliminada.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Ruta para actualizar una categoría
+router.put('/categorias/:id', async (req, res) => {
+  try {
+    const categoriaId = req.params.id;
+    const updatedData = req.body;
+    await categoriasController.updateCategoria(categoriaId, updatedData);
+    res.status(200).json({ message: `Categoría con ID ${categoriaId} actualizada.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Ruta para agregar un nuevo ingrediente
+router.post('/ingredientes', async (req, res) => {
+  try {
+    const { ingredientes_name, unidad_medida, recetaId } = req.body;
+    const nuevoIngrediente = await ingredientesController.agregarIngrediente(ingredientes_name, unidad_medida, recetaId);
+    res.status(201).json(nuevoIngrediente);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Ruta para mostrar todos los ingredientes
+router.get('/ingredientes', async (req, res) => {
+  try {
+    const ingredientes = await ingredientesController.mostrarIngredientes();
+    res.status(200).json(ingredientes);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Ruta para eliminar un ingrediente
+router.delete('/ingredientes/:id', async (req, res) => {
+  try {
+    const ingredienteId = req.params.id;
+    await ingredientesController.deleteIngrediente(ingredienteId);
+    res.status(200).json({ message: `Ingrediente con ID ${ingredienteId} eliminado.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Ruta para actualizar un ingrediente
+router.put('/ingredientes/:id', async (req, res) => {
+  try {
+    const ingredienteId = req.params.id;
+    const updatedData = req.body;
+    await ingredientesController.updateIngrediente(ingredienteId, updatedData);
+    res.status(200).json({ message: `Ingrediente con ID ${ingredienteId} actualizado.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Rutas para recetas
+router.post('/recetas', async (req, res) => {
+  try {
+    const { receta_name, receta_descripcion, receta_instrucciones, tiempo_preparacion, categoriaId } = req.body;
+    const nuevaReceta = await recetasController.agregarReceta(receta_name, receta_descripcion, receta_instrucciones, tiempo_preparacion, categoriaId);
+    res.status(201).json(nuevaReceta);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+router.get('/recetas', async (req, res) => {
+  try {
+    const recetas = await recetasController.mostrarRecetas();
+    res.status(200).json(recetas);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Ruta para eliminar una receta
+router.delete('/recetas/:id', async (req, res) => {
+  try {
+    const recetaId = req.params.id;
+    await recetasController.deleteReceta(recetaId);
+    res.status(200).json({ message: `Receta con ID ${recetaId} eliminada.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Ruta para actualizar una receta
+router.put('/recetas/:id', async (req, res) => {
+  try {
+    const recetaId = req.params.id;
+    const updatedData = req.body;
+    await recetasController.updateReceta(recetaId, updatedData);
+    res.status(200).json({ message: `Receta con ID ${recetaId} actualizada.` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 /**

@@ -8,6 +8,12 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swaggerConfig'); // Importa la configuración de Swagger
 
+const corsOptions = {
+  origin: '*', // Permitir todas las solicitudes de origen
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos HTTP permitidos
+  allowedHeaders: ['Content-Type', 'Authorization'], // Encabezados permitidos
+};
+
 app.use(cors(corsOptions));
 app.use(express.json()); // Corrige el uso de express.json()
 app.use('/', routes); // Usa las rutas importadas
