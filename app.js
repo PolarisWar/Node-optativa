@@ -42,3 +42,4 @@ sequelize
   .catch((err) => {
     console.log("Ha ocurrido un error al sincronizar los modelos: ", err);
   });
+  //
