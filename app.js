@@ -8,6 +8,7 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swaggerConfig'); // Importa la configuración de Swagger
 const logger = require('./logger/logger');
+const errorHandler = require('./middlewares/errorHandler');
 
 
 const corsOptions = {
@@ -23,6 +24,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use('/', routes); // Usa las rutas importadas
+app.use(errorHandler);
 
 // Configura Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));

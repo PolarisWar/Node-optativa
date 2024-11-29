@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const AppError = require('./errors/AppError');
+const logger = require('./logger/logger'); // Importa el logger
+
 
 // Importar los controladores
 const recetasController = require('./helpers/controllers/recetasController');
@@ -24,12 +27,14 @@ router.post('/categorias', validateCategoriaData, async (req, res) => {
 });
 
 // Ruta para mostrar todas las categorías
-router.get('/categorias', async (req, res) => {
+router.get('/categorias', async (req, res, next) => {
   try {
+    // Supongamos que tienes una función para obtener categorías
     const categorias = await categoriasController.mostrarCategorias();
     res.status(200).json(categorias);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    logger.error('Error al obtener categorías: ', error);
+    next(new AppError('No se pudieron obtener las categorías', 500));
   }
 });
 
@@ -68,12 +73,13 @@ router.post('/ingredientes', validateIngredienteData, async (req, res) => {
 });
 
 // Ruta para mostrar todos los ingredientes
-router.get('/ingredientes', async (req, res) => {
+router.get('/ingredientes', async (req, res, next) => {
   try {
     const ingredientes = await ingredientesController.mostrarIngredientes();
     res.status(200).json(ingredientes);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    logger.error('Error al obtener ingredientes: ', error);
+    next(new AppError('No se pudieron obtener los ingredientes', 500));
   }
 });
 
@@ -112,12 +118,13 @@ router.post('/recetas', validateRecetaData, async (req, res) => {
   }
 });
 
-router.get('/recetas', async (req, res) => {
+router.get('/recetas', async (req, res, next) => {
   try {
     const recetas = await recetasController.mostrarRecetas();
     res.status(200).json(recetas);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    logger.error('Error al obtener recetas: ', error);
+    next(new AppError('No se pudieron obtener las recetas', 500));
   }
 });
 
