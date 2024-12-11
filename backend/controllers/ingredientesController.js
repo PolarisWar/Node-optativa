@@ -23,9 +23,18 @@ async function updateIngrediente(ingredienteId, updatedData) {
   });
 }
 
+const obtenerIngredientePorId = async (ingredienteId) => {
+  const ingrediente = await Ingredientes.findByPk(ingredienteId);
+  if (!ingrediente) {
+    throw new Error("Ingrediente no encontrado.");
+  }
+  return ingrediente;
+};
+
 module.exports = {
   agregarIngrediente,
   mostrarIngredientes,
   deleteIngrediente,
-  updateIngrediente
+  updateIngrediente,
+  obtenerIngredientePorId
 };

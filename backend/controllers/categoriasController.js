@@ -23,9 +23,18 @@ async function updateCategoria(categoriaId, updatedData) {
   });
 }
 
+const obtenerCategoriaPorId = async (categoriaId) => {
+  const categoria = await Categorias.findByPk(categoriaId);
+  if (!categoria) {
+    throw new Error("Categoría no encontrada.");
+  }
+  return categoria;
+};
+
 module.exports = {
   agregarCategoria,
   mostrarCategorias,
   deleteCategoria,
-  updateCategoria
+  updateCategoria,
+  obtenerCategoriaPorId
 };

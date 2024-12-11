@@ -61,6 +61,16 @@ router.put('/categorias/:id', validateCategoriaData, async (req, res) => {
   }
 });
 
+// Ruta para obtener una categoría por ID
+router.get('/categorias/:id', async (req, res) => {
+  try {
+    const categoria = await categoriasController.obtenerCategoriaPorId(req.params.id);
+    res.status(200).json(categoria);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+});
+
 // Ruta para agregar un nuevo ingrediente
 router.post('/ingredientes', validateIngredienteData, async (req, res) => {
   try {
@@ -106,6 +116,16 @@ router.put('/ingredientes/:id', validateIngredienteData, async (req, res) => {
   }
 });
 
+// Ruta para obtener un ingrediente por ID
+router.get('/ingredientes/:id', async (req, res) => {
+  try {
+    const ingrediente = await ingredientesController.obtenerIngredientePorId(req.params.id);
+    res.status(200).json(ingrediente);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+});
+
 // Rutas para recetas
 // Ruta para agregar una nueva receta
 router.post('/recetas', validateRecetaData, async (req, res) => {
@@ -148,6 +168,16 @@ router.put('/recetas/:id', validateRecetaData, async (req, res) => {
     res.status(200).json({ message: `Receta con ID ${recetaId} actualizada.` });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+// Ruta para obtener una receta por ID
+router.get('/recetas/:id', async (req, res) => {
+  try {
+    const receta = await recetasController.obtenerRecetaPorId(req.params.id);
+    res.status(200).json(receta);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
   }
 });
 
@@ -347,6 +377,91 @@ router.put('/categorias/:id', async (req, res) => {
     res.status(200).json({ message: `Categoría con ID ${categoriaId} actualizada.` });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * @swagger
+ * /recetas/{id}:
+ *   get:
+ *     summary: Obtener una receta por ID
+ *     tags: [Recetas]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la receta
+ *     responses:
+ *       200:
+ *         description: Receta obtenida exitosamente
+ *       404:
+ *         description: Receta no encontrada
+ */
+router.get('/recetas/:id', async (req, res) => {
+  try {
+    const receta = await recetasController.obtenerRecetaPorId(req.params.id);
+    res.status(200).json(receta);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+});
+
+/**
+ * @swagger
+ * /ingredientes/{id}:
+ *   get:
+ *     summary: Obtener un ingrediente por ID
+ *     tags: [Ingredientes]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del ingrediente
+ *     responses:
+ *       200:
+ *         description: Ingrediente obtenido exitosamente
+ *       404:
+ *         description: Ingrediente no encontrado
+ */
+router.get('/ingredientes/:id', async (req, res) => {
+  try {
+    const ingrediente = await ingredientesController.obtenerIngredientePorId(req.params.id);
+    res.status(200).json(ingrediente);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
+  }
+});
+
+
+/**
+ * @swagger
+ * /categorias/{id}:
+ *   get:
+ *     summary: Obtener una categoría por ID
+ *     tags: [Categorias]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la categoría
+ *     responses:
+ *       200:
+ *         description: Categoría obtenida exitosamente
+ *       404:
+ *         description: Categoría no encontrada
+ */
+router.get('/categorias/:id', async (req, res) => {
+  try {
+    const categoria = await categoriasController.obtenerCategoriaPorId(req.params.id);
+    res.status(200).json(categoria);
+  } catch (error) {
+    res.status(404).json({ error: error.message });
   }
 });
 

@@ -23,9 +23,18 @@ async function updateReceta(recetaId, updatedData) {
   });
 }
 
+const obtenerRecetaPorId = async (recetaId) => {
+  const receta = await Recetas.findByPk(recetaId);
+  if (!receta) {
+    throw new Error("Receta no encontrada.");
+  }
+  return receta;
+};
+
 module.exports = {
   agregarReceta,
   mostrarRecetas,
   deleteReceta,
-  updateReceta
+  updateReceta,
+  obtenerRecetaPorId
 };
