@@ -5,9 +5,9 @@ const logger = require('./logger/logger'); // Importa el logger
 
 
 // Importar los controladores
-const recetasController = require('./helpers/controllers/recetasController');
-const ingredientesController = require('./helpers/controllers/ingredientesController');
-const categoriasController = require('./helpers/controllers/categoriasController');
+const recetasController = require('./controllers/recetasController');
+const ingredientesController = require('./controllers/ingredientesController');
+const categoriasController = require('./controllers/categoriasController');
 
 // Importar los middlewares de validación
 const validateIngredienteData = require('./middlewares/validateIngredienteData');

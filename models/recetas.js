@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../database");
+const sequelize = require("../helpers/database");
 
 const Recetas = sequelize.define("recetas", {
     receta_name: {

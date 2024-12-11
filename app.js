@@ -13,7 +13,7 @@ const errorHandler = require('./middlewares/errorHandler');
 
 const corsOptions = {
   origin: '*', // Permitir todas las solicitudes de origen
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos HTTP permitidos
+  methods: 'GET,PUT,POST,DELETE', // Métodos HTTP permitidos
   allowedHeaders: ['Content-Type', 'Authorization'], // Encabezados permitidos
 };
 

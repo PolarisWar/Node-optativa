@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../database");
+const sequelize = require("../helpers/database");
+
 
 const Categorias = sequelize.define("categorias", { 
     categoria_name: {
