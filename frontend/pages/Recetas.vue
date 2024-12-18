@@ -16,9 +16,12 @@
       <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">Agregar Receta</button>
     </form>
 
+    <h2 class="text-2xl text-center my-4">Recetas Existentes</h2>
     <ul class="list-disc pl-5">
       <li v-for="receta in recetas" :key="receta.id" class="my-2">
         {{ receta.receta_name }} - {{ receta.receta_descripcion }}
+        <button @click="editarReceta(receta)" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition">Editar</button>
+        <button @click="eliminarReceta(receta.id)" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition">Eliminar</button>
       </li>
     </ul>
   </div>
@@ -34,6 +37,7 @@ export default {
       receta_instrucciones: '',
       tiempo_preparacion: '',
       categoriaId: '',
+      recetaId: null, // Para almacenar el ID de la receta que se está editando
     };
   },
   async mounted() {
@@ -42,12 +46,12 @@ export default {
   methods: {
     async obtenerRecetas() {
       try {
-        const response = await fetch('http://localhost:3000/recetas'); // Cambia la URL si es necesario
+        const response = await fetch('http://localhost:3000/recetas');
         if (!response.ok) {
           throw new Error('Error al obtener recetas');
         }
         const data = await response.json();
-        this.recetas = data; // Asigna los datos a la variable recetas
+        this.recetas = data; // Asegúrate de que 'data' contenga la lista de recetas
       } catch (error) {
         console.error('Error al obtener recetas:', error);
       }
@@ -75,18 +79,77 @@ export default {
         }
 
         alert('Receta agregada exitosamente');
-        this.receta_name = '';
-        this.receta_descripcion = '';
-        this.receta_instrucciones = '';
-        this.tiempo_preparacion = '';
-        this.categoriaId = '';
-        
-        // Actualiza la lista de recetas después de agregar una nueva
+        this.limpiarFormulario();
         await this.obtenerRecetas();
       } catch (error) {
         console.error('Error al agregar receta:', error);
       }
     },
+    async eliminarReceta(id) {
+      try {
+        const response = await fetch(`http://localhost:3000/recetas/${id}`, {
+          method: 'DELETE',
+        });
+
+        if (!response.ok) {
+          throw new Error('Error al eliminar receta');
+        }
+
+        alert('Receta eliminada exitosamente');
+        await this.obtenerRecetas();
+      } catch (error) {
+        console.error('Error al eliminar receta:', error);
+      }
+    },
+    async editarReceta(receta) {
+      this.recetaId = receta.id;
+      this.receta_name = receta.receta_name;
+      this.receta_descripcion = receta.receta_descripcion;
+      this.receta_instrucciones = receta.receta_instrucciones;
+      this.tiempo_preparacion = receta.tiempo_preparacion;
+      this.categoriaId = receta.categoriaId;
+    },
+    async actualizarReceta() {
+      try {
+        const recetaActualizada = {
+          receta_name: this.receta_name,
+          receta_descripcion: this.receta_descripcion,
+          receta_instrucciones: this.receta_instrucciones,
+          tiempo_preparacion: this.tiempo_preparacion,
+          categoriaId: this.categoriaId,
+        };
+
+        const response = await fetch(`http://localhost:3000/recetas/${this.recetaId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(recetaActualizada),
+        });
+
+        if (!response.ok) {
+          throw new Error('Error al actualizar receta');
+        }
+
+        alert('Receta actualizada exitosamente');
+        this.limpiarFormulario();
+        await this.obtenerRecetas();
+      } catch (error) {
+        console.error('Error al actualizar receta:', error);
+      }
+    },
+    limpiarFormulario() {
+      this.receta_name = '';
+      this.receta_descripcion = '';
+      this.receta_instrucciones = '';
+      this.tiempo_preparacion = '';
+      this.categoriaId = '';
+      this.recetaId = null;
+    },
   },
 };
 </script>
+
+<style scoped>
+/* Estilos opcionales para tu componente */
+</style>

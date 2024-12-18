@@ -138,13 +138,13 @@ router.post('/recetas', validateRecetaData, async (req, res) => {
   }
 });
 
-router.get('/recetas', async (req, res, next) => {
+router.get('/recetas', async (req, res) => {
   try {
     const recetas = await recetasController.mostrarRecetas();
     res.status(200).json(recetas);
   } catch (error) {
     logger.error('Error al obtener recetas: ', error);
-    next(new AppError('No se pudieron obtener las recetas', 500));
+    res.status(500).json({ error: 'No se pudieron obtener las recetas' });
   }
 });
 
