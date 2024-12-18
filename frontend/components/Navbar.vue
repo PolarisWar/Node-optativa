@@ -3,7 +3,7 @@
     <div class="container mx-auto flex justify-between">
       <li>
       <div>
-        <NuxtLink to="/" class="text-blue-500 hover:underline mr-4">Volver al Home</NuxtLink>
+        <NuxtLink to="/" class="text-blue-500 hover:underline mr-4">Home</NuxtLink>
         <NuxtLink to="/recetas" class="text-white hover:underline mr-4">Recetas</NuxtLink>
         <NuxtLink to="/categorias" class="text-white hover:underline mr-4">Categorías</NuxtLink> 
       </div>
