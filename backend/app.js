@@ -30,7 +30,7 @@ app.use(errorHandler);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.listen(3001, () => {
-  logger.info('Servidor iniciado en el puerto 3000');
+  logger.info('Servidor iniciado en el puerto 3001');
 });
 
 // Instancia de Sequelize para conectarse a la base de datos

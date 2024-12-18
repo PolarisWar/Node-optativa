@@ -22,6 +22,3 @@ export default {
 
 
 
-<!----><a href="/" class="text-blue-500 hover:underline">Volver al Home</a>
-<a href="/recetas" class="text-white hover:underline">Recetas</a>
-<a href="/categorias" class="text-white hover:underline">Categorías</a>  -->
