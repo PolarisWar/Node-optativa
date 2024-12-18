@@ -29,7 +29,7 @@ app.use(errorHandler);
 // Configura Swagger UI
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.listen(3000, () => {
+app.listen(3001, () => {
   logger.info('Servidor iniciado en el puerto 3000');
 });
 
